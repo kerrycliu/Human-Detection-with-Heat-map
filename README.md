@@ -6,6 +6,8 @@ Libraries required:
 
 ```
 Import library needed for this project.
+import cv2 
+import imutils #image processing
 
 Include pip install instructions
 ```
