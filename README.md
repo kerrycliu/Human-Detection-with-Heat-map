@@ -31,6 +31,11 @@ What stage are we on.
 
 ## Contacts
 Michelle Fang:
+
 Kerry Liu:
-Anthony Nguyen:
+
+Anthony Nguyen: 
+PHONE:(408)7057746
+EMAIL:hoanganthony.nguyen@sjsu.edu
+
 Klein Sicam:
