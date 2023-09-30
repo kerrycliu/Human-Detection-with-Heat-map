@@ -6,11 +6,13 @@ Libraries required:
 
 ```
 Import library needed for this project.
-import cv2 
+import numpy as np
+import cv2 as cv
 import imutils #image processing
 
 Include pip install instructions
-```
+pip install pandas
+pip install opencv-python
 
 ## Usage
 How do users use your program/code
