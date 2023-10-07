@@ -4,7 +4,6 @@ An application that detects humans from a camera and presents the population des
 ## Installation
 Libraries required:
 
-```
 Import library needed for this project.
 import numpy as np
 import cv2 as cv
@@ -16,8 +15,22 @@ pip install opencv-python
 
 ## Usage
 How do users use your program/code
+```
+$ python3 main.py
+
+```
+### Testing
+
+The program will ask for permission to laptop's camera.
+
+The camera window will pop up named "frame" and green box will identify the objects.
+
+### Utilizing a webcam / camera
+
+In progress
 
 ## Features
+
 What are some of the features of the projects. What can people do and how to use it. 
 1. Camera
 >  > Detector people in static or motion.
@@ -35,6 +48,8 @@ What stage are we on.
 Michelle Fang:
 
 Kerry Liu:
+PHONE: (510)3201972
+EMAIL: chinan.liu@sjsu.edu
 
 Anthony Nguyen: 
 PHONE:(408)7057746
