@@ -1,59 +1,53 @@
+#new code to resize the video
+from ultralytics import YOLO
+from ultralytics.solutions import heatmap
 import cv2
-import cv2 as cv
-import numpy as np
-import time
 
-vid = cv.VideoCapture(0)  #0 is for the main camera
-if not vid.isOpened():  #check if there is a camera to open
-    print("Can't open camera")
-    exit()
+model = YOLO("best.pt")
+cap = cv2.VideoCapture(0)
+assert cap.isOpened(), "Error reading video file"
+fps = cap.get(cv2.CAP_PROP_FPS)
+width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-hog = cv.HOGDescriptor()
-hog.setSVMDetector(cv.HOGDescriptor_getDefaultPeopleDetector())
+# Define target width and height
+target_width = 1280
+target_height = 720
 
-start_time = time.time()#inital start time
-count = 0 #number of images
+# Video writer
+video_writer = cv2.VideoWriter("heatmap_output.avi",
+                               cv2.VideoWriter_fourcc(*'mp4v'),
+                               fps,
+                               (target_width, target_height))
 
-frame_count = 0
+# Init heatmap
+heatmap_obj = heatmap.Heatmap()
+heatmap_obj.set_args(colormap=cv2.COLORMAP_WINTER,
+                     imw=target_width,
+                     imh=target_height,
+                     view_img=True,
+                     shape="circle")
 
-while True:
-    #capture frame by frame
-    ret, frame = vid.read()
-    frame_count += 1
-
-    #if frame is read corretly ret is True
-    if not ret:
-        print("Can't receive frame (stream end?). Existing...")
+while cap.isOpened():
+    success, frame = cap.read()
+    if not success:
+        print("Video frame is empty or video processing has been successfully completed.")
         break
+    
+    # Resize frame to target dimensions
+    frame = cv2.resize(frame, (target_width, target_height))
+    
+    # Perform object tracking
+    tracks = model.track(frame, persist=True, show=False)
 
-    if frame_count == 1: #skip 10 frames before detect a person
+    # Generate heatmap
+    frame = heatmap_obj.generate_heatmap(frame, tracks)
+    
+    # Write frame to output video
+    video_writer.write(frame)
 
-        #gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-        # Detect humans in the frame
-        humans, _ = hog.detectMultiScale(frame, winStride=(4, 4), padding=(8, 8), scale=1.05)
+cap.release()
+video_writer.release()
+cv2.destroyAllWindows()
 
-        # Draw rectangles around detected humans
-        for (x, y, w, h) in humans:
-            cv.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
-        end_time = time.time()
-        elapsed_time = end_time - start_time
-
-        if elapsed_time >= 5:  # if time passed is 5 seconds take image
-            print("taking image")  # comment this out later
-            print(elapsed_time)  # comment this out later
-            cv.imwrite("frame%d.jpg" % count, frame)  # save image
-            start_time = time.time()  # new start time since its time after image is taken
-            # count += 1 #used to save multiple images
-
-        frame_count = 0
-
-    cv.imshow('Human Detection', frame)  # display webcam
-
-    if cv.waitKey(1) == ord('q'):#press q to turn of webcam and quit the program
-        break
-
-#when everything is done release the caputre
-vid.release()
-cv.destroyAllWindows()
-exit()
