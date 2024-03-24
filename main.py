@@ -6,6 +6,7 @@ import json
 
 model = YOLO("best_2-23.pt")
 cap = cv2.VideoCapture("vidp.mp4")
+f = open('dataOutput2', 'a')
 names = model.names
 assert cap.isOpened(), "Error reading video file"
 fps = cap.get(cv2.CAP_PROP_FPS)
@@ -43,9 +44,16 @@ while cap.isOpened():
     tracks = model.track(frame, persist=True, show=False, verbose=True, classes=0)
     name = tracks[0].names
     personDetection = []
+    res = []
     for k, v in name.items():
         personDetection.append(tracks[0].boxes.cls.tolist().count(k))
     detected = dict(zip(names.values(), personDetection))
+    for key in detected.keys():
+        res.append(detected[key])
+    print(str(res))
+    f.seek(0)
+    f.truncate()
+    f.write(str(res))
     with open('dataOutput.txt', 'w') as convert_file:
         convert_file.write(json.dumps(detected))
     print(detected)
@@ -53,6 +61,10 @@ while cap.isOpened():
     # Write frame to output video
     video_writer.write(frame)
 
+    if cv2.waitKey(1) == ord("q"):
+        break
+
+f.close()
 cap.release()
 video_writer.release()
 cv2.destroyAllWindows()
