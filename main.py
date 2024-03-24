@@ -2,8 +2,9 @@
 from ultralytics import YOLO
 from ultralytics.solutions import heatmap
 import cv2
+import json
 
-model = YOLO("best.pt")
+model = YOLO("best_2-23.pt")
 cap = cv2.VideoCapture("vidp.mp4")
 names = model.names
 assert cap.isOpened(), "Error reading video file"
@@ -45,6 +46,8 @@ while cap.isOpened():
     for k, v in name.items():
         personDetection.append(tracks[0].boxes.cls.tolist().count(k))
     detected = dict(zip(names.values(), personDetection))
+    with open('dataOutput.txt', 'w') as convert_file:
+        convert_file.write(json.dumps(detected))
     print(detected)
     frame = heatmap_obj.generate_heatmap(frame, tracks)
     # Write frame to output video
@@ -53,5 +56,3 @@ while cap.isOpened():
 cap.release()
 video_writer.release()
 cv2.destroyAllWindows()
-
-
