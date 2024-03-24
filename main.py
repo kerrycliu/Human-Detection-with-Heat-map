@@ -1,10 +1,11 @@
-#new code to resize the video
+# new code to resize the video
 from ultralytics import YOLO
 from ultralytics.solutions import heatmap
 import cv2
 
 model = YOLO("best.pt")
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture("vidp.mp4")
+names = model.names
 assert cap.isOpened(), "Error reading video file"
 fps = cap.get(cv2.CAP_PROP_FPS)
 width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -33,16 +34,19 @@ while cap.isOpened():
     if not success:
         print("Video frame is empty or video processing has been successfully completed.")
         break
-    
+
     # Resize frame to target dimensions
     frame = cv2.resize(frame, (target_width, target_height))
-    
-    # Perform object tracking
-    tracks = model.track(frame, persist=True, show=False)
 
-    # Generate heatmap
+    # Perform object tracking
+    tracks = model.track(frame, persist=True, show=False, verbose=True, classes=0)
+    name = tracks[0].names
+    personDetection = []
+    for k, v in name.items():
+        personDetection.append(tracks[0].boxes.cls.tolist().count(k))
+    detected = dict(zip(names.values(), personDetection))
+    print(detected)
     frame = heatmap_obj.generate_heatmap(frame, tracks)
-    
     # Write frame to output video
     video_writer.write(frame)
 
