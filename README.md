@@ -4,21 +4,23 @@ Utilizes YOLO, OpenCV, and other Machine Learning Libraries for detecting human 
 
 ## Installation
 Libraries required:
-
-Import library needed for this project.
-import numpy as np
-import cv2 as cv
-import imutils #image processing
+from ultralytics import YOLO
+from ultralytics.solutions import heatmap
+import cv2
+import json
 
 Include pip install instructions
-pip install pandas
-pip install opencv-python
+pip install ultralytics #this installs all dependencies
+
 
 
 ## Usage
 How do users use your program/code
 ```
+#for mac users
 $ python3 main.py
+#windows users
+python .\main.py
 
 ```
 ### Testing
@@ -29,16 +31,16 @@ The camera window will pop up named "frame" and green box will identify the obje
 
 ### Utilizing a webcam / camera
 
-In progress
+The webcam/camera will just be used for one purpose which is to harvest data for the heatmap, nothing else will be done using the camera. 
 
 ## Features
 
 What are some of the features of the projects. What can people do and how to use it. 
 1. Camera
+2. 
 >  > Detector people in static or motion.
 >  > Set more than one camera. Different view points. Will the camera recongize the same human and only count 1.
-3. Sensors
-4. Heat Map
+3. Heat Map
 
 ## Sample Image
 Put some screenshots if applicable. 
