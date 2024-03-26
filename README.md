@@ -1,5 +1,6 @@
 # Human-Detection-with-Heat-map
 An application that detects humans from a camera and presents the population desity as a heap map.
+Utilizes YOLO, OpenCV, and other Machine Learning Libraries for detecting human objects accurately. 
 
 ## Installation
 Libraries required:
@@ -24,7 +25,7 @@ $ python3 main.py
 
 The program will ask for permission to laptop's camera.
 
-The camera window will pop up named "frame" and green box will identify the objects.
+The camera window will pop up named "frame" and green box will identify the objects in frame.
 
 ### Utilizing a webcam / camera
 
@@ -43,7 +44,9 @@ What are some of the features of the projects. What can people do and how to use
 Put some screenshots if applicable. 
 
 ## Roadmap
-What stage are we on.
+1. Using CVAT, an open-source image and video annotation tool, to accurately detect humans only.
+2. Gather human count from each camera frame and store in database.
+3. Generate heatmap based on the data. 
 
 ## Contacts
 Michelle Fang:
@@ -54,6 +57,7 @@ EMAIL: chinan.liu@sjsu.edu
 
 Anthony Nguyen: 
 PHONE:(408)7057746
+
 EMAIL:hoanganthony.nguyen@sjsu.edu
 
 Klein Sicam:
