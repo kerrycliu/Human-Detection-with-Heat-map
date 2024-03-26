@@ -14,6 +14,7 @@ Include pip install instructions
 pip install pandas
 pip install opencv-python
 
+
 ## Usage
 How do users use your program/code
 ```
@@ -52,7 +53,6 @@ Michelle Fang:
 
 Kerry Liu:
 PHONE: (510)3201972
-
 EMAIL: chinan.liu@sjsu.edu
 
 Anthony Nguyen: 
