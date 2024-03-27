@@ -43,7 +43,8 @@ What are some of the features of the projects. What can people do and how to use
 3. Heat Map
 
 ## Sample Image
-Put some screenshots if applicable. 
+![image](https://github.com/kerrycliu/Human-Detection-with-Heat-map/assets/93110676/1d287e7f-d2a5-47c3-969f-f544c534b32e)
+
 
 ## Roadmap
 1. Using CVAT, an open-source image and video annotation tool, to accurately detect humans only.
